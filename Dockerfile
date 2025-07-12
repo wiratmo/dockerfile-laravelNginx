@@ -7,6 +7,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/html
 COPY /src /var/www/html
 
-COPY ./docker/init.sh /init.sh
+COPY ./init.sh /init.sh
 RUN chmod +x /init.sh
 CMD ["/init.sh"]
+
