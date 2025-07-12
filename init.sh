@@ -9,15 +9,6 @@ ENV_FILE=".env"
 cd /var/www/html || exit 1
 
 
-echo "⏳ Menunggu koneksi ke database..."
-until php artisan migrate:status > /dev/null 2>&1; do
-  >&2 echo "🕐 Plaese exec php artisan migrate and seed (optional)"
-  sleep 10
-done
-
-chown -R www-data:www-data storage bootstrap/cache
-chmod -R 775 storage bootstrap/cache
-
 # Pastikan file .env ada
 if [ ! -f "$ENV_FILE" ]; then
   echo "❌ File .env tidak ditemukan!"
@@ -39,6 +30,16 @@ php artisan config:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+
+echo "⏳ Menunggu koneksi ke database..."
+until php artisan migrate:status > /dev/null 2>&1; do
+  >&2 echo "🕐 Plaese exec php artisan migrate and seed (optional)"
+  sleep 10
+done
+
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 
 exec php-fpm
 
