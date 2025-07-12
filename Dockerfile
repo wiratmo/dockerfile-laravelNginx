@@ -5,7 +5,10 @@ RUN apt-get update && apt-get install -y     libzip-dev git curl libpng-dev libo
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
-COPY /src /var/www/html
+
+COPY ./src /var/www/html
+
+RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
 COPY ./init.sh /init.sh
 RUN chmod +x /init.sh
