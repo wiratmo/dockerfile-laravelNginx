@@ -11,6 +11,8 @@ COPY ./src /var/www/html
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
 COPY ./init.sh /init.sh
+
 RUN chmod +x /init.sh
+
 CMD ["/init.sh"]
 
